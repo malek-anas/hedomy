@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "901763906430",
+    "project_id": "hedomy-c45eb",
+    "storage_bucket": "hedomy-c45eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:901763906430:android:80a159f7ad1847e54bd12f",
+        "android_client_info": {
+          "package_name": "com.example.hedomy0"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "901763906430-ck43lf622bjbf9c8p6450utiif7m51ok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBUHd99cfbkDRPJcN0-GFieQLn-2AP7ok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "901763906430-ck43lf622bjbf9c8p6450utiif7m51ok.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
