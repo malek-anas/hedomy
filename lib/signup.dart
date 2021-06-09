@@ -1,14 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'aftersignin.dart';
+import 'data.dart';
+
+enum AuthMode{SignUp}
 
 class signup extends StatefulWidget {
+
   @override
   State<StatefulWidget> createState() {
 
     return _signup();
   }
 }
+final _keyform =GlobalKey <FormState>();
+
+
+TextEditingController _email = TextEditingController();
+TextEditingController _password = TextEditingController();
+TextEditingController _phone = TextEditingController();
+TextEditingController _name = TextEditingController();
+var _isLoading = false;
+
+AuthMode _authMode=AuthMode.SignUp;
+Map<String,String>_authData = {
+  'email':'',
+  'password':'',
+  'name':'',
+  'phone':'',
+
+};
 Widget buildName() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +50,11 @@ Widget buildName() {
             ]
         ),
         height: 45,
-        child: TextField(
+        child:Form(
+   key: _keyform,
+        child: TextFormField(
+          controller: _name,
+          validator: (value){if(value.isEmpty){return 'please enter your name';}},
           keyboardType: TextInputType.text,
           style: TextStyle(
             color: Colors.black,
@@ -44,6 +70,7 @@ Widget buildName() {
           ),
         ),
       ),
+      )
     ],
   );
 }
@@ -66,7 +93,10 @@ Widget buildPhone() {
             ]
         ),
         height: 45,
-        child: TextField(
+        child:Form(
+        child: TextFormField(
+          controller: _phone,
+          validator: (value){if(value.isEmpty){return 'please enter your phone';}},
           keyboardType: TextInputType.phone,
           style: TextStyle(
             color: Colors.black,
@@ -81,6 +111,7 @@ Widget buildPhone() {
               )
           ),
         ),
+      ),
       ),
     ],
   );
@@ -104,7 +135,11 @@ Widget buildEmail() {
             ]
         ),
         height: 45,
-        child: TextField(
+        child:Form(
+
+        child: TextFormField(
+          controller: _email,
+          validator: (value){if(value.isEmpty){return 'please enter your email';}},
           keyboardType: TextInputType.emailAddress,
           style: TextStyle(
             color: Colors.black,
@@ -119,6 +154,7 @@ Widget buildEmail() {
               )
           ),
         ),
+      ),
       ),
     ],
   );
@@ -142,7 +178,11 @@ Widget buildPassword() {
             ]
         ),
         height: 45,
-        child: TextField(
+        child:Form(
+
+        child: TextFormField(
+          controller: _password,
+          validator: (value){if(value.isEmpty){return 'please enter your password';}},
           obscureText: true,
           style: TextStyle(
             color: Colors.black,
@@ -158,6 +198,7 @@ Widget buildPassword() {
           ),
         ),
       ),
+      ),
     ],
   );
 }
@@ -168,11 +209,16 @@ Widget buildsignup(context) {
     child: RaisedButton(
       elevation: 5,
       onPressed: (){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => AfterSignIn()),
-        );
-        print('sign up');
+        if(_keyform.currentState.validate()){
+          return;
+        }
+
+
+        if (_authMode == AuthMode.SignUp) {
+          Provider.of<data>(context,listen:false).signup(_authData['email'], _authData['[password]'], _authData['phone'], _authData['name']);
+        }
+        Navigator.push(context, MaterialPageRoute(builder: (context) => AfterSignIn()),
+        );print('sign up');
       },
       padding: EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
@@ -181,6 +227,10 @@ Widget buildsignup(context) {
       child: Text('Sign Up'),
     ),
   );
+
+}
+
+void setState(Null Function() param0) {
 }
 
 

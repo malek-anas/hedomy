@@ -57,7 +57,6 @@ class _AfterSignIn extends State<AfterSignIn> {
     );
   }
 }
-
 Widget Home() {
   return Scaffold(
     appBar: AppBar(

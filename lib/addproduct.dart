@@ -1,38 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'addproduct.dart';
+import 'guest.dart';
 
-class Guest extends StatefulWidget {
+class addproduct extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _Guest();
+    return _addproduct();
   }
 }
-Widget buildadd(context) {
+Widget buildnewadd(context) {
   return Container(
     padding: EdgeInsets.symmetric(vertical: 40),
     width: double.infinity,
     child: RaisedButton(
       elevation: 5,
       onPressed: (){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => addproduct()),
-        );
+
       },
       padding: EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Text('Login'),
+      child: Text('Add Product'),
     ),
   );
 }
 
-class _Guest extends State<Guest> {
+class _addproduct extends State<Guest> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
 
       appBar: AppBar(
@@ -63,34 +60,18 @@ class _Guest extends State<Guest> {
                   ]
               )
           ),
-          child: Center(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context,index){
-                return Column(
-                  children: [
-                    Container(
-                      color:  Color(0xff848ac6),
-                      height: 100,
-                      width: MediaQuery.of(context).size.width-50,
-                      child: ListTile(
-                        title: Text("Town Team",style: TextStyle(fontSize: 24),),
-                        subtitle: Stack(
-                          children: [
-                            Text("01552639568"),
-                            Padding(padding: EdgeInsets.only(top: 20),child: Text("St Al Haram "),),
-                          ],
-                        ),
-                        leading:CircleAvatar(backgroundImage:NetworkImage("https://www.marni.com/12/12386489MT_13_n_r.jpg"),radius: 30,),
-                      ),
-                    ),
-                    SizedBox(height: 20,),
+          child: ListView.builder(
+            itemCount: 10,
+            itemBuilder: (context,index){
+              return Column(
+                children: [
 
-                  ],
+                  SizedBox(height: 20,),
+                  buildnewadd(context),
 
-                );
-              },
-            ),
+                ],
+              );
+            },
           ),
         ),
       ),

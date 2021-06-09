@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'aftersignin.dart';
 import 'guest.dart';
 import 'signup.dart';
+
 class login extends StatefulWidget{
   @override
+
   _loginState createState() =>  _loginState();
 }
+
+final _keyform =GlobalKey <FormState>();
+
+TextEditingController _email = TextEditingController();
+TextEditingController _password = TextEditingController();
+
+
 Widget buildEmail() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,7 +36,11 @@ Widget buildEmail() {
             ]
         ),
         height: 60,
-        child: TextField(
+        child:Form(
+          key: _keyform,
+        child: TextFormField(
+           controller: _email,
+          validator: (value){if(value.isEmpty){return 'please enter your email';}},
           keyboardType: TextInputType.emailAddress,
           style: TextStyle(
             color: Colors.black,
@@ -40,6 +54,7 @@ Widget buildEmail() {
                 color: Colors.black,
               )
           ),
+        ),
         ),
       ),
     ],
@@ -64,7 +79,9 @@ Widget buildPassword() {
             ]
         ),
         height: 60,
-        child: TextField(
+        child: TextFormField(
+          controller: _password,
+          validator: (value){if(value.isEmpty){return 'please enter your password';}},
           obscureText: true,
           style: TextStyle(
             color: Colors.black,
@@ -80,6 +97,7 @@ Widget buildPassword() {
           ),
         ),
       ),
+
     ],
   );
 }
@@ -89,16 +107,28 @@ Widget buildlogin(context) {
     width: double.infinity,
     child: RaisedButton(
       elevation: 5,
-      onPressed: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AfterSignIn()));
-        print('Login');
-      },
+
+      onPressed: () async{
+        if(_keyform.currentState.validate()){
+          var result=  await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email.text, password: _password.text);
+          Navigator.push(context,MaterialPageRoute(builder: (context) => AfterSignIn()),);
+          if(result != null){
+           print('Done');}
+          else{
+            print('not found');}
+          }
+        },
+
+
+
       padding: EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
       child: Text('Login'),
+
     ),
+
   );
 }
 Widget buildsignup(context){
@@ -141,8 +171,10 @@ Widget buildAsaguest(context){
 
 
 
+
 class _loginState extends State<login> {
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
